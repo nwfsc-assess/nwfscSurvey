@@ -9,9 +9,9 @@ PlotVarLengthAtAge.fn(
   dat,
   main = NULL,
   ageBin = 1,
-  bySex = T,
-  parStart = c(52, 0.09, 1),
-  estVB = T,
+  bySex = TRUE,
+  parStart = c(52, 0.09, 1, 0.1, 0.1),
+  estVB = TRUE,
   bins = NULL,
   legX = "bottomleft",
   legY = NULL,
@@ -30,7 +30,7 @@ PlotVarLengthAtAge.fn(
 
 \item{bySex}{Logical to indicate if plot by sex}
 
-\item{parStart}{Vector of starting parameters for Linf, k, and t0 in VonB estimation}
+\item{parStart}{Vector of starting parameters for Linf, k, L0, CV0, and CV1 in VonB estimation}
 
 \item{estVB}{Logical. Estimate vonB growth to plot against predicted length. If F, it uses the paramters in \code{parStart}.}
 
@@ -44,6 +44,14 @@ PlotVarLengthAtAge.fn(
 }
 \description{
 Plots the SD and CV of age at observed and predicted length
+}
+\examples{
+\dontrun{
+# SurveyName is only arg that has to be specified
+bio_dat = PullBio.fn(SurveyName = "NWFSC.Combo")
+PlotVarLengthAtAge.fn(dat = bio_dat)
+dev.off()
+}
 }
 \author{
 Allan Hicks and Chantel Wetzel
