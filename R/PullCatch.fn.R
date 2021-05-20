@@ -153,12 +153,12 @@ PullCatch.fn <- function(Name = NULL, SciName = NULL, YearRange = c(1980, 5000),
   Vars <- c(
     var.name, "year", "subsample_count", "subsample_wt_kg", "project", "cpue_kg_per_ha_der",
     "total_catch_numbers", "total_catch_wt_kg", "vessel", "tow", "operation_dim$legacy_performance_code",
-    "statistical_partition_dim$statistical_partition_type"
+    "statistical_partition_dim$statistical_partition_type", "station_code"
   )
 
   Vars.short <- c(
     var.name, "year", "subsample_count", "subsample_wt_kg", "project", "cpue_kg_per_ha_der",
-    "total_catch_numbers", "total_catch_wt_kg", "vessel", "tow"
+    "total_catch_numbers", "total_catch_wt_kg", "vessel", "tow", "station_code"
   )
 
   # symbols here are generally: %22 = ", %2C = ",", %20 = " "
@@ -223,8 +223,8 @@ PullCatch.fn <- function(Name = NULL, SciName = NULL, YearRange = c(1980, 5000),
   names(Data)[which(names(Data) == "common_name")] <- "Common_name"
 
   # Pull all tow data (includes tows where the species was not observed)
-  Vars <- c("project", "year", "vessel", "pass", "tow", "datetime_utc_iso", "depth_m", "longitude_dd", "latitude_dd", "area_swept_ha_der", "trawl_id", "operation_dim$legacy_performance_code")
-  Vars.short <- c("project", "year", "vessel", "pass", "tow", "datetime_utc_iso", "depth_m", "longitude_dd", "latitude_dd", "area_swept_ha_der", "trawl_id")
+  Vars <- c("project", "year", "vessel", "pass", "tow", "datetime_utc_iso", "depth_m", "longitude_dd", "latitude_dd", "area_swept_ha_der", "trawl_id", "operation_dim$legacy_performance_code", "station_code")
+  Vars.short <- c("project", "year", "vessel", "pass", "tow", "datetime_utc_iso", "depth_m", "longitude_dd", "latitude_dd", "area_swept_ha_der", "trawl_id", "station_code")
 
   UrlText <- paste0(
     "https://www.webapps.nwfsc.noaa.gov/data/api/v1/source/trawl.operation_haul_fact/selection.json?filters=project=", paste(strsplit(project, " ")[[1]], collapse = "%20"), ",",
@@ -255,7 +255,7 @@ PullCatch.fn <- function(Name = NULL, SciName = NULL, YearRange = c(1980, 5000),
 
   All.Tows <- All.Tows[
     !duplicated(paste(All.Tows$Year, All.Tows$Pass, All.Tows$Vessel, All.Tows$Tow)),
-    c("Project", "Trawl_id", "Year", "Pass", "Vessel", "Tow", "Date", "Depth_m", "Longitude_dd", "Latitude_dd", "Area_Swept_ha")
+    c("Project", "Trawl_id", "Year", "Pass", "Vessel", "Tow", "Date", "Depth_m", "Longitude_dd", "Latitude_dd", "Area_Swept_ha", "station_code")
   ]
 
   # Link each data set together based on trawl_id
